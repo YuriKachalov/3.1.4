@@ -95,6 +95,11 @@ public class UserServiceImp implements UserService, UserDetailsService {
         return user;
     }
 
+    @Override
+    public User saveUsers(User user) {
+        return userRepository.save(user);
+    }
+
     //UserDetailsService
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

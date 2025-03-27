@@ -1,4 +1,5 @@
-
+alert('sdvsdvsv')
+//
     const SERVER_URL = 'http://localhost:8080/api';
 
     async function fetchCurrentUser() {
@@ -27,7 +28,9 @@
     $tdEmail.textContent = userObj.email;
 
     // Обработка ролей
+
     $tdRole.textContent = userObj.roleSet.map(role => role.role).join(', ');
+
 
     $tr.append($tdId, $tdName, $tdSurname, $tdAge, $tdEmail, $tdRole);
     return $tr;

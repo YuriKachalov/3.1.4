@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -10,11 +11,13 @@ import java.util.Set;
 public class Role implements GrantedAuthority {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String role;
 
     @Transient
+    @JsonIgnore
     @ManyToMany(mappedBy = "roleSet")
     @JoinTable(
             name = "user_role",
@@ -31,6 +34,7 @@ public class Role implements GrantedAuthority {
     }
 
     @Override
+    @JsonIgnore
     public String getAuthority() {
         return getRole();
     }

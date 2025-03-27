@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.services;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
+import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepositori;
 
 import java.util.List;
@@ -40,5 +41,16 @@ public class RolesServiceImp implements RolesService {
         } else {
             return roleRepositori.save(role);
         }
+    }
+
+
+    public Role findByRole(String roleName) {
+        Role role = null;
+        Optional<Role> optionalRole = roleRepositori.findByRole(roleName);
+        if (optionalRole.isPresent()) {
+            role = optionalRole.get();
+        }
+        return role;
+
     }
 }
