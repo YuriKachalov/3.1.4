@@ -10,5 +10,5 @@ public interface RolesService {
 
     Role saveRole(Role role);
 
-    List<Role> findRolesByIds(List<Integer> roleIds);
+    Role findByRole(String roleName);
 }

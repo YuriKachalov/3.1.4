@@ -15,9 +15,6 @@ public interface UserService {
 
     List<User> listUsers();
 
-    //получаем доступ по id
-    User getUserId(Integer id);
-
     User getUserByName(String userName);
 }
 

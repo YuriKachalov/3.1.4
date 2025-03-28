@@ -94,21 +94,7 @@
                                         <th scope="col">Role</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr class="border-top">
-                                        <th scope="row"><p><span th:text="${user.id}"></span></p></th>
-                                        <td><p><span th:text="${user.name}"></span></p></td>
-                                        <td><p><span th:text="${user.surname}"></span></p></td>
-                                        <td><p><span th:text="${user.age}"></span></p></td>
-                                        <td><p><span th:text="${user.email}"></span></p></td>
-                                        <td>
-                                            <span th:each="role, iterStat : ${user.roleSet}"
-                                                  th:text="${role.role}" th:if="${role.role}"
-                                                  style="margin-right: 7px;">
-                                                <span th:if="${iterStat.last()}"> </span>
-                                            </span>
-                                        </td>
-                                    </tr>
+                                    <tbody id="user-table">
                                     </tbody>
                                 </table>
                             </td>
@@ -123,5 +109,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+<script defer src="/Admin2.js"></script>
+
 </body>
 </html>

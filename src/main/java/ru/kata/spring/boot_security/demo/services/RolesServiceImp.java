@@ -24,12 +24,6 @@ public class RolesServiceImp implements RolesService {
 
     @Override
     @Transactional
-    public List<Role> findRolesByIds(List<Integer> roleIds) {
-        return roleRepositori.findAllByIdIn(roleIds);
-    }
-
-    @Override
-    @Transactional
     public Role saveRole(Role role) {
         Optional<Role> existingRoleOpt = roleRepositori.findById(role.getId());
 
@@ -40,5 +34,14 @@ public class RolesServiceImp implements RolesService {
         } else {
             return roleRepositori.save(role);
         }
+    }
+
+    public Role findByRole(String roleName) {
+        Role role = null;
+        Optional<Role> optionalRole = roleRepositori.findByRole(roleName);
+        if (optionalRole.isPresent()) {
+            role = optionalRole.get();
+        }
+        return role;
     }
 }
