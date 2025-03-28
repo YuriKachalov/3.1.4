@@ -75,17 +75,6 @@ public class UserServiceImp implements UserService, UserDetailsService {
     }
 
     @Override
-    @Transactional
-    public User getUserId(Integer id) {
-        User user = null;
-        Optional<User> optionalUser = userRepository.findById(id);
-        if (optionalUser.isPresent()) {
-            user = optionalUser.get();
-        }
-        return user;
-    }
-
-    @Override
     public User getUserByName(String userName) {
         User user = null;
         Optional<User> optionalUser = userRepository.findByName(userName);
@@ -93,11 +82,6 @@ public class UserServiceImp implements UserService, UserDetailsService {
             user = optionalUser.get();
         }
         return user;
-    }
-
-    @Override
-    public User saveUsers(User user) {
-        return userRepository.save(user);
     }
 
     //UserDetailsService

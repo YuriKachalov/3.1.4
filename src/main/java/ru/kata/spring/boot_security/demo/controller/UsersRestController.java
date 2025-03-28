@@ -42,54 +42,48 @@ public class UsersRestController {
     @GetMapping("/admin")
     public ResponseEntity<List<User>> showUser() {
         List<User> users = userService.listUsers();
-        return ResponseEntity.ok(users); // Возвращаем список пользователей с кодом 200 OK
+        return ResponseEntity.ok(users);
     }
 
-    @PutMapping("/admin")
+    @PutMapping("/admin-edit")
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        Set<Role> roleList = user.getRoleSet();
-        userService.saveUser(user, new ArrayList<>(roleList));
-        return ResponseEntity.ok(user);
-    }
-
-
-    @DeleteMapping("/admin")
-    public ResponseEntity<HttpStatus> deleteUser(@RequestBody Map<String, Integer> request) {
-        int id = request.get("id");
-        userService.deleteUser(id);
-        return ResponseEntity.ok(HttpStatus.OK);
-    }
-
-
-    //сохраняем
-//    @PostMapping("/admin-update")
-//    public ResponseEntity<User> addNewUser(@RequestBody User user) {
-//        Set<Role> roleList = user.getRoleSet();
-//        userService.saveUser(user, new ArrayList<>(roleList));
-//        return ResponseEntity.ok(user); // Возвращаем сохраненного пользователя
-//    }
-
-    @PostMapping("/admin-update")
-    public ResponseEntity<User> addNewUser(@RequestBody User user) {
         Set<Role> roleList = new HashSet<>();
 
-        // Получите существующие роли из базы данных
         for (Role selectedRole : user.getRoleSet()) {
             Role existingRole = rolesService.findByRole(selectedRole.getRole());
             if (existingRole != null) {
                 roleList.add(existingRole);
             }
         }
-
-        user.setRoleSet(roleList); // Устанавливаем существующие роли пользователю
+        user.setRoleSet(roleList);
         userService.saveUser(user, new ArrayList<>(roleList));
-        return ResponseEntity.ok(user); // Возвращаем сохраненного пользователя
+        return ResponseEntity.ok(user);
+    }
+
+    @DeleteMapping("/admin-delete")
+    public ResponseEntity<HttpStatus> deleteUser(@RequestBody Map<String, Integer> request) {
+        int id = request.get("id");
+        userService.deleteUser(id);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PostMapping("/admin-update")
+    public ResponseEntity<User> addNewUser(@RequestBody User user) {
+        Set<Role> roleList = new HashSet<>();
+
+        for (Role selectedRole : user.getRoleSet()) {
+            Role existingRole = rolesService.findByRole(selectedRole.getRole());
+            if (existingRole != null) {
+                roleList.add(existingRole);
+            }
+        }
+        user.setRoleSet(roleList);
+        userService.saveUser(user, new ArrayList<>(roleList));
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("/roles")
     public List<Role> getAllRoles() {
         return rolesService.listRoles();
     }
-
-
 }

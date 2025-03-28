@@ -13,12 +13,7 @@ public interface UserService {
     //    изменять пользователя
     void saveUser(User user, List<Role> roles);
 
-    User saveUsers(User user);
-
     List<User> listUsers();
-
-    //получаем доступ по id
-    User getUserId(Integer id);
 
     User getUserByName(String userName);
 }
