@@ -1,13 +1,25 @@
-const SERVER_URL = 'http://localhost:8080/api';
 
+
+const SERVER_URL = window.location.origin;
 async function fetchCurrentUser() {
-    const response = await fetch(`${SERVER_URL}/user`);
+    const response = await fetch(`${SERVER_URL}/api/user`);
     return await response.json();
 }
 
 async function renderCurrentUser() {
     const currentUser = await fetchCurrentUser();
+    const userRole = currentUser.roleSet.map(role => role.role).join(', '); // Получаем роли пользователя
+    showAdminLink(userRole); // Передаем роли в функцию показа ссылки
     render([currentUser]); // передаем массив с одним пользователем
+}
+
+function showAdminLink(userRole) {
+    const adminItem = document.getElementById('admin-item');
+    if (userRole.includes('ROLE_ADMIN')) { // Проверяем, есть ли роль Admin
+        adminItem.style.display = 'list-item'; // Показываем элемент
+    } else {
+        adminItem.style.display = 'none'; // Скрываем элемент
+    }
 }
 
 function $getNewUserTR(userObj) {
@@ -42,4 +54,5 @@ function render(arr) {
     }
 }
 
+// Вызов функции при загрузке страницы
 renderCurrentUser();

@@ -28,14 +28,6 @@ public class UsersController {
         return "login";
     }
 
-    @GetMapping("/admin2")
-    public String sayAdmin2(Principal principal, Model model) {
-        String userName = principal.getName();
-        User user = userService.getUserByName(userName);
-        model.addAttribute("user", user);
-        return "admin2";
-    }
-
     @GetMapping("/user")
     public String sayHello(Principal principal, Model model) {
         String userName = principal.getName();

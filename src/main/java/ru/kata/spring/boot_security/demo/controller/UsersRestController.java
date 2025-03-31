@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -19,17 +20,17 @@ public class UsersRestController {
     private final UserService userService;
     private final RolesService rolesService;
 
+    @Value("${server.url}")
+    private String serverUrl;
+
+    @GetMapping("/config")
+    public String getServerUrl() {
+        return serverUrl;
+    }
+
     public UsersRestController(UserService userService, RolesService rolesService) {
         this.userService = userService;
         this.rolesService = rolesService;
-    }
-
-    @GetMapping("/admin2")
-    public String sayAdmin2(Principal principal, Model model) {
-        String userName = principal.getName();
-        User user = userService.getUserByName(userName);
-        model.addAttribute("user", user);
-        return "admin2";
     }
 
     @GetMapping("/user")

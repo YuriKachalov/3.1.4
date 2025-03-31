@@ -1,6 +1,12 @@
+async function fetchServerUrl() {
+    const response = await fetch('/api/config');
+    return await response.text(); // или response.json(), если Вы вернете JSON
+}
+
 // вывод ролей для выбора в Add new user
 async function fetchRoles() {
-    const response = await fetch('http://localhost:8080/api/roles');
+    const SERVER_URL = await fetchServerUrl();
+    const response = await fetch(SERVER_URL + '/api/roles');
     const roles = await response.json();
     populateSelect(roles);
 }
@@ -21,7 +27,8 @@ document.addEventListener('DOMContentLoaded', fetchRoles);
 
 // вывод ролей для выбора в Edit
 async function fetchRolesEdit() {
-    const response = await fetch('http://localhost:8080/api/roles');
+    const SERVER_URL = await fetchServerUrl();
+    const response = await fetch(SERVER_URL + '/api/roles');
     const roles = await response.json();
     populateSelectEdit(roles);
 }
@@ -42,7 +49,8 @@ document.addEventListener('DOMContentLoaded', fetchRolesEdit);
 
 // вывод ролей для Delete
 async function fetchRolesDelete() {
-    const response = await fetch('http://localhost:8080/api/roles');
+    const SERVER_URL = await fetchServerUrl();
+    const response = await fetch(SERVER_URL + '/api/roles');
     const roles = await response.json();
     populateSelectDelete(roles);
 }

@@ -1,6 +1,10 @@
-const SERVER_URL = 'http://localhost:8080';
 let listUser = []
 const csrfToken = getCsrfToken();
+
+async function fetchServerUrl() {
+    const response = await fetch(`/api/config`);
+    return await response.text(); // или response.json(), если Вы вернете JSON
+}
 
 //получение токкена
 function getCsrfToken() {
@@ -10,6 +14,7 @@ function getCsrfToken() {
 
 // функция для вывода всех user
 async function fetchCurrentUser() {
+    const SERVER_URL = await fetchServerUrl();
     const response = await fetch(`${SERVER_URL}/api/admin`);
     return await response.json();
 }
@@ -22,6 +27,7 @@ async function renderCurrentUser() {
 
 //добавление нового user
 async function serverAddUser(obj) {
+    const SERVER_URL = await fetchServerUrl();
     let response = await fetch(`${SERVER_URL}/api/admin-update`, {
         method: "POST",
         headers: {
@@ -35,6 +41,7 @@ async function serverAddUser(obj) {
 
 //изменение user
 async function serverEditUser(obj) {
+    const SERVER_URL = await fetchServerUrl();
     let response = await fetch(`${SERVER_URL}/api/admin-edit`, {
         method: "PUT",
         headers: {
@@ -48,6 +55,7 @@ async function serverEditUser(obj) {
 
 //удаление user
 async function serverDeleteUser(obj) {
+    const SERVER_URL = await fetchServerUrl();
     let response = await fetch(`${SERVER_URL}/api/admin-delete`, {
         method: "DELETE",
         headers: {
