@@ -4,7 +4,6 @@ package ru.kata.spring.boot_security.demo.controller;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -23,14 +22,14 @@ public class UsersRestController {
     @Value("${server.url}")
     private String serverUrl;
 
-    @GetMapping("/config")
-    public String getServerUrl() {
-        return serverUrl;
-    }
-
     public UsersRestController(UserService userService, RolesService rolesService) {
         this.userService = userService;
         this.rolesService = rolesService;
+    }
+
+    @GetMapping("/config")
+    public String getServerUrl() {
+        return serverUrl;
     }
 
     @GetMapping("/user")

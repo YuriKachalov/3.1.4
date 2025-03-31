@@ -1,6 +1,5 @@
-
-
 const SERVER_URL = window.location.origin;
+
 async function fetchCurrentUser() {
     const response = await fetch(`${SERVER_URL}/api/user`);
     return await response.json();

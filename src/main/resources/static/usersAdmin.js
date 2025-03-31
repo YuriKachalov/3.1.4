@@ -67,7 +67,6 @@ async function serverDeleteUser(obj) {
     return await response.json()
 }
 
-
 function $getNewUserTR(userObj) {
     const $tr = document.createElement("tr");
     const $tdId = document.createElement("td");
@@ -85,7 +84,6 @@ function $getNewUserTR(userObj) {
     $btnEdit.textContent = "Edit"
     $btnDelete.classList.add("btn", "btn-danger")
     $btnDelete.textContent = "Delete"
-
 
     $tdId.textContent = userObj.id;
     $tdName.textContent = userObj.name;
@@ -144,83 +142,85 @@ function render(arr) {
 }
 
 //копка добавления  Add new user
-document.getElementById("add-form").addEventListener("submit", async function (event) {
-    event.preventDefault()
+document.getElementById("add-form").addEventListener("submit",
+    async function (event) {
+        event.preventDefault()
 //обработка role
-    const selectElement = document.getElementById('roles');
-    const selectedRoles = Array.from(selectElement.selectedOptions).map(option => ({
-        // id: option.id,
-        role: option.value
-    }));
+        const selectElement = document.getElementById('roles');
+        const selectedRoles = Array.from(selectElement.selectedOptions).map(option => ({
+            // id: option.id,
+            role: option.value
+        }));
 
-    let newUserObj = {
-        name: document.getElementById("name2").value,
-        surname: document.getElementById("surname2").value,
-        age: parseInt(document.getElementById("age2").value, 10),
-        email: document.getElementById("email2").value,
-        passwordUser: document.getElementById("password2").value,
-        roleSet: selectedRoles,
-    }
-    console.log(newUserObj)
-    let serverDataUser = await serverAddUser(newUserObj)
-    listUser.push(serverDataUser)
-    render(listUser)
+        let newUserObj = {
+            name: document.getElementById("name2").value,
+            surname: document.getElementById("surname2").value,
+            age: parseInt(document.getElementById("age2").value, 10),
+            email: document.getElementById("email2").value,
+            passwordUser: document.getElementById("password2").value,
+            roleSet: selectedRoles,
+        }
+        console.log(newUserObj)
+        let serverDataUser = await serverAddUser(newUserObj)
+        listUser.push(serverDataUser)
+        render(listUser)
 
-    const usersTabButton = document.getElementById("home-tab");
-    const tab = new bootstrap.Tab(usersTabButton);
-    tab.show();
-    document.getElementById("add-form").reset();
-})
+        const usersTabButton = document.getElementById("home-tab");
+        const tab = new bootstrap.Tab(usersTabButton);
+        tab.show();
+        document.getElementById("add-form").reset();
+    })
 
 //копка Edit
-document.getElementById("editUserForm").addEventListener("submit", async function (event) {
-    event.preventDefault()
+document.getElementById("editUserForm").addEventListener("submit",
+    async function (event) {
+        event.preventDefault()
 //обработка role
-    const selectElement = document.getElementById('modalRole');
-    const selectedRoles = Array.from(selectElement.selectedOptions).map(option => ({
-        role: option.value
-    }));
+        const selectElement = document.getElementById('modalRole');
+        const selectedRoles = Array.from(selectElement.selectedOptions).map(option => ({
+            role: option.value
+        }));
 
-    let newUserObj = {
-        id: document.getElementById('modalId').value,
-        name: document.getElementById("modalName").value,
-        surname: document.getElementById("modalSurname").value,
-        age: parseInt(document.getElementById("modalAge").value, 10),
-        email: document.getElementById("modalEmail").value,
-        passwordUser: document.getElementById("modalPassword").value,
-        roleSet: selectedRoles,
-    }
+        let newUserObj = {
+            id: document.getElementById('modalId').value,
+            name: document.getElementById("modalName").value,
+            surname: document.getElementById("modalSurname").value,
+            age: parseInt(document.getElementById("modalAge").value, 10),
+            email: document.getElementById("modalEmail").value,
+            passwordUser: document.getElementById("modalPassword").value,
+            roleSet: selectedRoles,
+        }
 
-    let serverDataUser = await serverEditUser(newUserObj)
-    const index = listUser.findIndex(user => user.id === serverDataUser.id);
-    listUser[index] = serverDataUser
-    render(listUser)
+        let serverDataUser = await serverEditUser(newUserObj)
+        const index = listUser.findIndex(user => user.id === serverDataUser.id);
+        listUser[index] = serverDataUser
+        render(listUser)
 
-    // Закрытие модального окна
-    const modalElement = document.getElementById('modal1');
-    const modal = bootstrap.Modal.getInstance(modalElement);
-    modal.hide();
-    document.getElementById("editUserForm").reset();
-})
+        // Закрытие модального окна
+        const modalElement = document.getElementById('modal1');
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        modal.hide();
+        document.getElementById("editUserForm").reset();
+    })
 renderCurrentUser()
 
 
 //копка Delete
-document.getElementById("form-Delete").addEventListener("submit", async function (event) {
-    event.preventDefault()
+document.getElementById("form-Delete").addEventListener("submit",
+    async function (event) {
+        event.preventDefault()
 
-    const UserDelete = {
-        id: document.getElementById("idDelete").value
-    }
+        const UserDelete = {
+            id: document.getElementById("idDelete").value
+        }
 
+        let serverDataUser = await serverDeleteUser(UserDelete)
+        const index = listUser.findIndex(user => user.id === serverDataUser.id);
+        listUser.splice(index, 1)
+        render(listUser)
 
-    let serverDataUser = await serverDeleteUser(UserDelete)
-    const index = listUser.findIndex(user => user.id === serverDataUser.id);
-    listUser.splice(index, 1)
-    render(listUser)
-
-    // Закрытие модального окна
-    const modalElement = document.getElementById('modal');
-    const modal = bootstrap.Modal.getInstance(modalElement);
-    modal.hide();
-})
+        // Закрытие модального окна
+        const modalElement = document.getElementById('modal');
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        modal.hide();
+    })
